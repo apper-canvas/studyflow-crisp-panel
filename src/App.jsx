@@ -19,21 +19,21 @@ import Header from "@/components/organisms/Header";
 import { clearUser, setUser } from "@/store/userSlice";
 
 export const AuthContext = createContext(null);
-function AppContent() {
+function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [quickAddType, setQuickAddType] = useState(null);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isInitialized, setIsInitialized] = useState(false);
+  const [authMethods, setAuthMethods] = useState(null);
 
-  const handleQuickAdd = (type) => {
+const handleQuickAdd = (type) => {
     setQuickAddType(type);
     if (type === "course") navigate("/courses");
     else if (type === "assignment") navigate("/assignments");
     else if (type === "grade") navigate("/grades");
     else if (type === "student") navigate("/students");
   };
-
   useEffect(() => {
     const { ApperClient, ApperUI } = window.ApperSDK;
     
@@ -96,23 +96,26 @@ const navigate = useNavigate();
         console.error("Authentication failed:", error);
       }
     });
+
+    // Set auth methods after setup
+    const methods = {
+      isInitialized,
+      logout: async () => {
+        try {
+          const { ApperUI } = window.ApperSDK;
+          await ApperUI.logout();
+          dispatch(clearUser());
+          navigate('/login');
+        } catch (error) {
+          console.error("Logout failed:", error);
+        }
+      }
+    };
+    setAuthMethods(methods);
   }, []);
 
-  const authMethods = {
-    isInitialized,
-    logout: async () => {
-      try {
-        const { ApperUI } = window.ApperSDK;
-        await ApperUI.logout();
-        dispatch(clearUser());
-        navigate('/login');
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
-    }
-  };
 
-  if (!isInitialized) {
+if (!isInitialized || !authMethods) {
     return (
       <div className="loading flex items-center justify-center p-6 h-screen w-full">
         <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -127,10 +130,10 @@ const navigate = useNavigate();
         </svg>
       </div>
     );
-  }
+}
 
-return (
-    <>
+  return (
+    <AuthContext.Provider value={authMethods}>
       <div className="min-h-screen bg-slate-50 flex">
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         
@@ -171,22 +174,15 @@ return (
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover
+pauseOnHover
       />
-    </>
+    </AuthContext.Provider>
   );
 }
-
-function App() {
-  const [authMethods, setAuthMethods] = useState(null);
-
+export default function AppWrapper() {
   return (
     <BrowserRouter>
-      <AuthContext.Provider value={authMethods}>
-        <AppContent />
-      </AuthContext.Provider>
+      <App />
     </BrowserRouter>
   );
 }
-
-export default App;
