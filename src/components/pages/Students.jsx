@@ -49,15 +49,16 @@ function Students() {
     let filtered = [...students];
 
     if (searchQuery) {
-      const query = searchQuery.toLowerCase();
+const query = searchQuery.toLowerCase();
       filtered = filtered.filter(student =>
-        student.name.toLowerCase().includes(query) ||
-        student.email.toLowerCase().includes(query) ||
-        student.major.toLowerCase().includes(query)
+        student.name_c?.toLowerCase().includes(query) ||
+        student.email_c?.toLowerCase().includes(query) ||
+        student.major_c?.toLowerCase().includes(query)
       );
     }
 
-    if (yearFilter !== 'all') {
+if (yearFilter !== 'all') {
+      filtered = filtered.filter(student => student.year_c === yearFilter);
       filtered = filtered.filter(student => student.year === yearFilter);
     }
 

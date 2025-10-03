@@ -52,22 +52,27 @@ const Dashboard = () => {
     }
   };
 
-  const getCourseGrade = (courseId) => {
-    const courseGrades = grades.filter((g) => g.courseId === courseId);
-    const courseCategories = categories.filter((c) => c.courseId === courseId);
+const getCourseGrade = (courseId) => {
+    const courseGrades = grades.filter((g) => {
+      const gradeCoursceId = g.course_id_c?.Id || g.course_id_c;
+      return gradeCoursceId === courseId;
+    });
+    const courseCategories = categories.filter((c) => {
+      const catCourseId = c.course_id_c?.Id || c.course_id_c;
+      return catCourseId === courseId;
+    });
     return calculateCourseGrade(courseGrades, courseCategories);
   };
 
   const getOverallGPA = () => {
     const courseGrades = courses.map((course) => ({
       grade: getCourseGrade(course.Id),
-      credits: course.credits
+      credits: course.credits_c
     }));
     return calculateGPA(courseGrades);
   };
-
-  const upcomingAssignments = sortByDueDate(
-    assignments.filter((a) => a.status !== "completed")
+const upcomingAssignments = sortByDueDate(
+    assignments.filter((a) => a.status_c !== "completed")
   ).slice(0, 5);
 
   const handleStatusChange = async (assignmentId, newStatus) => {
@@ -143,7 +148,7 @@ const Dashboard = () => {
             <div>
               <p className="text-sm text-slate-600">Pending Tasks</p>
               <p className="text-2xl font-bold text-slate-900">
-                {assignments.filter((a) => a.status !== "completed").length}
+{assignments.filter((a) => a.status_c !== "completed").length}
               </p>
             </div>
           </div>
@@ -156,8 +161,8 @@ const Dashboard = () => {
             </div>
             <div>
               <p className="text-sm text-slate-600">Completed</p>
-              <p className="text-2xl font-bold text-slate-900">
-                {assignments.filter((a) => a.status === "completed").length}
+<p className="text-2xl font-bold text-slate-900">
+                {assignments.filter((a) => a.status_c === "completed").length}
               </p>
             </div>
           </div>
@@ -184,9 +189,12 @@ const Dashboard = () => {
           <div className="space-y-3">
             {upcomingAssignments.map((assignment) => (
               <AssignmentCard
-                key={assignment.Id}
+key={assignment.Id}
                 assignment={assignment}
-                course={courses.find((c) => c.Id === assignment.courseId)}
+                course={courses.find((c) => {
+                  const assignmentCourseId = assignment.course_id_c?.Id || assignment.course_id_c;
+                  return c.Id === assignmentCourseId;
+                })}
                 onStatusChange={handleStatusChange}
                 onEdit={() => navigate("/assignments")}
                 onDelete={() => {}}

@@ -1,9 +1,12 @@
 import { NavLink, useLocation } from "react-router-dom";
+import { useContext } from "react";
 import { motion } from "framer-motion";
 import ApperIcon from "@/components/ApperIcon";
+import { AuthContext } from "../../App";
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
+  const { logout } = useContext(AuthContext);
 
 const navigation = [
     { name: "Dashboard", path: "/", icon: "LayoutDashboard" },
@@ -103,6 +106,15 @@ const navigation = [
           </motion.div>
         </>
       )}
+<div className="p-4 border-t border-slate-200">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 w-full px-4 py-3 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+        >
+          <ApperIcon name="LogOut" size={20} />
+          <span className="font-medium">Logout</span>
+        </button>
+      </div>
     </>
   );
 };

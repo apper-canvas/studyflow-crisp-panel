@@ -52,9 +52,15 @@ const Courses = () => {
     }
   };
 
-  const getCourseGrade = (courseId) => {
-    const courseGrades = grades.filter((g) => g.courseId === courseId);
-    const courseCategories = categories.filter((c) => c.courseId === courseId);
+const getCourseGrade = (courseId) => {
+    const courseGrades = grades.filter((g) => {
+      const gradeCoursceId = g.course_id_c?.Id || g.course_id_c;
+      return gradeCoursceId === courseId;
+    });
+    const courseCategories = categories.filter((c) => {
+      const catCourseId = c.course_id_c?.Id || c.course_id_c;
+      return catCourseId === courseId;
+    });
     return calculateCourseGrade(courseGrades, courseCategories);
   };
 
@@ -97,10 +103,10 @@ const Courses = () => {
     }
   };
 
-  const filteredCourses = courses.filter((course) =>
-    course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    course.courseCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    course.instructor.toLowerCase().includes(searchTerm.toLowerCase())
+const filteredCourses = courses.filter((course) =>
+    course.name_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    course.course_code_c?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    course.instructor_c?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) return <Loading type="cards" />;

@@ -110,24 +110,33 @@ const Grades = () => {
     );
   }
 
-  const courseGrades = selectedCourse
-    ? grades.filter((g) => g.courseId === parseInt(selectedCourse))
+const courseGrades = selectedCourse
+    ? grades.filter((g) => {
+        const gradeCoursceId = g.course_id_c?.Id || g.course_id_c;
+        return gradeCoursceId === parseInt(selectedCourse);
+      })
     : [];
 
   const courseCategories = selectedCourse
-    ? categories.filter((c) => c.courseId === parseInt(selectedCourse))
+    ? categories.filter((c) => {
+        const catCourseId = c.course_id_c?.Id || c.course_id_c;
+        return catCourseId === parseInt(selectedCourse);
+      })
     : [];
 
   const currentGrade = calculateCourseGrade(courseGrades, courseCategories);
   const letterGrade = getLetterGrade(currentGrade);
 
   const gradesByCategory = courseCategories.map((category) => {
-    const categoryGrades = courseGrades.filter((g) => g.category === category.name);
+    const categoryGrades = courseGrades.filter((g) => g.category_c === category.name_c);
     const avgScore =
       categoryGrades.length > 0
         ? categoryGrades.reduce((sum, g) => sum + (g.score / g.maxScore) * 100, 0) / categoryGrades.length
-        : 0;
+: 0;
     return {
+      ...category,
+      name: category.name_c,
+      weight: category.weight_c,
       ...category,
       grades: categoryGrades,
       average: avgScore
@@ -160,9 +169,9 @@ const Grades = () => {
           value={selectedCourse}
           onChange={(e) => setSelectedCourse(e.target.value)}
         >
-          {courses.map((course) => (
+{courses.map((course) => (
             <option key={course.Id} value={course.Id}>
-              {course.courseCode} - {course.name}
+              {course.course_code_c} - {course.name_c}
             </option>
           ))}
         </Select>
@@ -191,8 +200,8 @@ const Grades = () => {
             </Card>
 
             {gradesByCategory.slice(0, 2).map((category) => (
-              <Card key={category.Id}>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">{category.name}</h3>
+<Card key={category.Id}>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">{category.name_c}</h3>
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm text-slate-600">Weight: {(category.weight * 100).toFixed(0)}%</span>
                   <Badge variant="primary">
@@ -219,12 +228,12 @@ const Grades = () => {
 
           <div className="space-y-6">
             {gradesByCategory.map((category) => (
-              <Card key={category.Id}>
+<Card key={category.Id}>
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900">{category.name}</h3>
+                    <h3 className="text-lg font-semibold text-slate-900">{category.name_c}</h3>
                     <p className="text-sm text-slate-600">
-                      Weight: {(category.weight * 100).toFixed(0)}% | Average: {category.average.toFixed(1)}%
+                      Weight: {(category.weight_c * 100).toFixed(0)}% | Average: {category.average.toFixed(1)}%
                     </p>
                   </div>
                 </div>
@@ -233,14 +242,15 @@ const Grades = () => {
                 ) : (
                   <div className="space-y-2">
                     {category.grades.map((grade) => (
-                      <div
+<div
                         key={grade.Id}
-                        className="flex items-center justify-between p-3 bg-slate-50 rounded-lg group hover:bg-slate-100 transition-colors"
+                        className="p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+                        onClick={() => handleEdit(grade)}
                       >
-                        <div className="flex-1">
-                          <h4 className="font-medium text-slate-900">{grade.title}</h4>
+                        <div className="flex items-center justify-between">
+                          <p className="font-medium text-slate-900">{grade.title_c}</p>
                           <p className="text-sm text-slate-600">
-                            {grade.score} / {grade.maxScore} ({((grade.score / grade.maxScore) * 100).toFixed(1)}%)
+                            {grade.score_c} / {grade.max_score_c} ({((grade.score_c / grade.max_score_c) * 100).toFixed(1)}%)
                           </p>
                         </div>
                         <div className="flex items-center gap-3">

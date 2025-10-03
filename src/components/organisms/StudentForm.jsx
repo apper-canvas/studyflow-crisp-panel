@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import Input from '@/components/atoms/Input';
-import Select from '@/components/atoms/Select';
-import Button from '@/components/atoms/Button';
-import ApperIcon from '@/components/ApperIcon';
+import React, { useState } from "react";
+import ApperIcon from "@/components/ApperIcon";
+import Select from "@/components/atoms/Select";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
 
 function StudentForm({ student, onSubmit, onCancel }) {
-  const [formData, setFormData] = useState({
-    name: student?.name || '',
-    email: student?.email || '',
-    phone: student?.phone || '',
-    enrollmentDate: student?.enrollmentDate || '',
-    major: student?.major || '',
-    year: student?.year || 'Freshman',
-    gpa: student?.gpa || ''
+const [formData, setFormData] = useState({
+    name_c: student?.name_c || '',
+    email_c: student?.email_c || '',
+    phone_c: student?.phone_c || '',
+    enrollment_date_c: student?.enrollment_date_c || '',
+    major_c: student?.major_c || '',
+    year_c: student?.year_c || 'Freshman',
+    gpa_c: student?.gpa_c || ''
   });
 
   const [errors, setErrors] = useState({});
@@ -20,26 +20,26 @@ function StudentForm({ student, onSubmit, onCancel }) {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+if (!formData.name_c.trim()) {
+      newErrors.name_c = 'Name is required';
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
+    if (!formData.email_c.trim()) {
+      newErrors.email_c = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email_c)) {
+      newErrors.email_c = 'Invalid email format';
     }
 
-    if (!formData.enrollmentDate) {
-      newErrors.enrollmentDate = 'Enrollment date is required';
+    if (!formData.enrollment_date_c) {
+      newErrors.enrollment_date_c = 'Enrollment date is required';
     }
 
-    if (!formData.major.trim()) {
-      newErrors.major = 'Major is required';
+    if (!formData.major_c.trim()) {
+      newErrors.major_c = 'Major is required';
     }
 
-    if (formData.gpa && (isNaN(formData.gpa) || formData.gpa < 0 || formData.gpa > 4.0)) {
-      newErrors.gpa = 'GPA must be between 0.0 and 4.0';
+    if (formData.gpa_c && (isNaN(formData.gpa_c) || formData.gpa_c < 0 || formData.gpa_c > 4.0)) {
+      newErrors.gpa_c = 'GPA must be between 0.0 and 4.0';
     }
 
     setErrors(newErrors);
@@ -64,73 +64,76 @@ function StudentForm({ student, onSubmit, onCancel }) {
     e.preventDefault();
     if (validateForm()) {
       onSubmit({
-        ...formData,
-        gpa: formData.gpa ? parseFloat(formData.gpa) : null
+name_c: formData.name_c,
+        email_c: formData.email_c,
+        phone_c: formData.phone_c,
+        enrollment_date_c: formData.enrollment_date_c,
+        major_c: formData.major_c,
+        year_c: formData.year_c,
+        gpa_c: formData.gpa_c ? parseFloat(formData.gpa_c) : null
       });
     }
   };
 
-  return (
+return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
           <Input
             label="Full Name"
-            name="name"
-            value={formData.name}
+            name="name_c"
+            value={formData.name_c}
             onChange={handleChange}
-            placeholder="Enter student name"
-            error={errors.name}
+            error={errors.name_c}
             required
           />
         </div>
 
         <Input
           label="Email"
-          name="email"
           type="email"
-          value={formData.email}
+          name="email_c"
+          value={formData.email_c}
           onChange={handleChange}
-          placeholder="student@university.edu"
-          error={errors.email}
+          error={errors.email_c}
           required
         />
 
         <Input
           label="Phone"
-          name="phone"
           type="tel"
-          value={formData.phone}
+          name="phone_c"
+          value={formData.phone_c}
           onChange={handleChange}
-          placeholder="(555) 123-4567"
-          error={errors.phone}
+          error={errors.phone_c}
         />
 
         <Input
           label="Enrollment Date"
-          name="enrollmentDate"
           type="date"
-          value={formData.enrollmentDate}
+          name="enrollment_date_c"
+          value={formData.enrollment_date_c}
           onChange={handleChange}
-          error={errors.enrollmentDate}
+          error={errors.enrollment_date_c}
           required
         />
 
         <Input
           label="Major"
-          name="major"
-          value={formData.major}
+          name="major_c"
+          value={formData.major_c}
           onChange={handleChange}
-          placeholder="Computer Science"
-          error={errors.major}
+          error={errors.major_c}
+          placeholder="e.g., Computer Science"
           required
         />
 
         <Select
-          label="Academic Year"
-          name="year"
-          value={formData.year}
+          label="Year"
+          name="year_c"
+          value={formData.year_c}
           onChange={handleChange}
+          error={errors.year_c}
           required
         >
           <option value="Freshman">Freshman</option>
@@ -141,23 +144,22 @@ function StudentForm({ student, onSubmit, onCancel }) {
 
         <Input
           label="GPA"
-          name="gpa"
           type="number"
-          step="0.01"
-          min="0"
-          max="4.0"
-          value={formData.gpa}
+          name="gpa_c"
+          value={formData.gpa_c}
           onChange={handleChange}
+          error={errors.gpa_c}
+          step="0.01"
           placeholder="3.75"
-          error={errors.gpa}
         />
       </div>
 
-      <div className="flex justify-end gap-3 pt-4">
+      <div className="flex justify-end gap-2">
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           onClick={onCancel}
+          icon={<ApperIcon name="X" size={18} />}
         >
           Cancel
         </Button>

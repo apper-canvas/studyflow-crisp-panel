@@ -48,14 +48,17 @@ const Calendar = () => {
   const calendarDays = eachDayOfInterval({ start: calendarStart, end: calendarEnd });
 
   const getAssignmentsForDate = (date) => {
-    return assignments.filter((assignment) => {
-      const assignmentDate = new Date(assignment.dueDate);
+return assignments.filter((assignment) => {
+      const assignmentDate = new Date(assignment.due_date_c);
       return isSameDay(assignmentDate, date);
     });
   };
 
-  const getCourseColor = (courseId) => {
-    const course = courses.find((c) => c.Id === courseId);
+const getCourseColor = (courseId) => {
+    const course = courses.find((c) => {
+      const cid = courseId?.Id || courseId;
+      return c.Id === cid;
+    });
     return course?.color || "#3b82f6";
   };
 
@@ -144,8 +147,9 @@ const Calendar = () => {
                     <div className="flex flex-wrap gap-0.5 justify-center">
                       {dayAssignments.slice(0, 3).map((assignment) => (
                         <div
-                          key={assignment.Id}
+key={assignment.Id}
                           className="w-1.5 h-1.5 rounded-full"
+                          style={{ backgroundColor: getCourseColor(assignment.course_id_c) }}
                           style={{ backgroundColor: getCourseColor(assignment.courseId) }}
                         />
                       ))}
@@ -169,8 +173,9 @@ const Calendar = () => {
               </div>
             ) : (
               <div className="space-y-3">
-                {selectedDateAssignments.map((assignment) => {
-                  const course = courses.find((c) => c.Id === assignment.courseId);
+{selectedDateAssignments.map((assignment) => {
+                  const assignmentCourseId = assignment.course_id_c?.Id || assignment.course_id_c;
+                  const course = courses.find((c) => c.Id === assignmentCourseId);
                   return (
                     <div key={assignment.Id} className="p-3 bg-slate-50 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">

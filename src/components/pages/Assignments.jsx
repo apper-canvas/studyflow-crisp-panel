@@ -101,11 +101,12 @@ const Assignments = () => {
     }
   };
 
-  const filteredAssignments = assignments.filter((assignment) => {
-    const matchesSearch = assignment.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCourse = filterCourse === "all" || assignment.courseId === parseInt(filterCourse);
-    const matchesStatus = filterStatus === "all" || assignment.status === filterStatus;
-    const matchesPriority = filterPriority === "all" || assignment.priority === filterPriority;
+const filteredAssignments = assignments.filter((assignment) => {
+    const matchesSearch = assignment.title_c?.toLowerCase().includes(searchTerm.toLowerCase());
+    const assignmentCourseId = assignment.course_id_c?.Id || assignment.course_id_c;
+    const matchesCourse = filterCourse === "all" || assignmentCourseId === parseInt(filterCourse);
+    const matchesStatus = filterStatus === "all" || assignment.status_c === filterStatus;
+    const matchesPriority = filterPriority === "all" || assignment.priority_c === filterPriority;
     return matchesSearch && matchesCourse && matchesStatus && matchesPriority;
   });
 
@@ -127,9 +128,12 @@ const Assignments = () => {
         <div className="space-y-3">
           {assignments.map((assignment) => (
             <AssignmentCard
-              key={assignment.Id}
+key={assignment.Id}
               assignment={assignment}
-              course={courses.find((c) => c.Id === assignment.courseId)}
+              course={courses.find((c) => {
+                const assignmentCourseId = assignment.course_id_c?.Id || assignment.course_id_c;
+                return c.Id === assignmentCourseId;
+              })}
               onStatusChange={handleStatusChange}
               onEdit={handleEdit}
               onDelete={setDeletingAssignment}
@@ -174,10 +178,11 @@ const Assignments = () => {
             className="pl-10"
           />
         </div>
-        <Select value={filterCourse} onChange={(e) => setFilterCourse(e.target.value)}>
+<Select value={filterCourse} onChange={(e) => setFilterCourse(e.target.value)}>
           <option value="all">All Courses</option>
           {courses.map((course) => (
             <option key={course.Id} value={course.Id}>
+              {course.course_code_c}
               {course.courseCode}
             </option>
           ))}

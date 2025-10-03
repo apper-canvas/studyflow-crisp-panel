@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
+import React from "react";
 import ApperIcon from "@/components/ApperIcon";
-import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
-import { getRelativeDate, getDueDateStatus } from "@/utils/dateHelpers";
+import Card from "@/components/atoms/Card";
+import { getDueDateStatus, getRelativeDate } from "@/utils/dateHelpers";
 
 const AssignmentCard = ({ assignment, course, onStatusChange, onEdit, onDelete }) => {
-  const dueDateInfo = getDueDateStatus(assignment.dueDate);
+const dueDateInfo = getDueDateStatus(assignment.due_date_c);
 
   const priorityConfig = {
     low: { color: "default", icon: "ArrowDown" },
@@ -19,13 +20,13 @@ const AssignmentCard = ({ assignment, course, onStatusChange, onEdit, onDelete }
     completed: { color: "success", icon: "CheckCircle2" }
   };
 
-  const priority = priorityConfig[assignment.priority];
-  const status = statusConfig[assignment.status];
+const priority = priorityConfig[assignment.priority_c];
+  const status = statusConfig[assignment.status_c];
 
   const handleStatusClick = (e) => {
     e.stopPropagation();
     const statuses = ["pending", "in-progress", "completed"];
-    const currentIndex = statuses.indexOf(assignment.status);
+const currentIndex = statuses.indexOf(assignment.status_c);
     const nextStatus = statuses[(currentIndex + 1) % statuses.length];
     onStatusChange(assignment.Id, nextStatus);
   };
@@ -33,7 +34,7 @@ const AssignmentCard = ({ assignment, course, onStatusChange, onEdit, onDelete }
   return (
     <Card hover className="group">
       <div className="flex items-start gap-4">
-        <motion.button
+<motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={handleStatusClick}
@@ -43,18 +44,15 @@ const AssignmentCard = ({ assignment, course, onStatusChange, onEdit, onDelete }
             name={status.icon}
             size={24}
             className={`${
-              assignment.status === "completed" ? "text-success" : "text-slate-400"
+              assignment.status_c === "completed" ? "text-success" : "text-slate-400"
             } transition-colors`}
           />
         </motion.button>
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-4 mb-2">
-            <div className="flex-1">
-              <h3 className="font-semibold text-slate-900 mb-1">{assignment.title}</h3>
-              {assignment.description && (
-                <p className="text-sm text-slate-600 line-clamp-2">{assignment.description}</p>
-              )}
+        <div className="flex-1">
+          <div className="flex items-start justify-between mb-2">
+            <div>
+              <h3 className="text-lg font-semibold text-slate-900">{assignment.title_c}</h3>
             </div>
             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
               <motion.button
@@ -76,27 +74,31 @@ const AssignmentCard = ({ assignment, course, onStatusChange, onEdit, onDelete }
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 mt-3">
+          {assignment.description_c && (
+            <p className="text-sm text-slate-600 line-clamp-2 mb-3">{assignment.description_c}</p>
+          )}
+
+          <div className="flex flex-wrap items-center gap-3">
             {course && (
               <div className="flex items-center gap-2">
                 <div
                   className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: course.color }}
+                  style={{ backgroundColor: course.color_c }}
                 />
-                <span className="text-sm text-slate-600">{course.courseCode}</span>
+                <span className="text-sm text-slate-600">{course.course_code_c}</span>
               </div>
             )}
-            <Badge variant={dueDateInfo.color} size="sm">
-              <ApperIcon name="Calendar" size={12} className="mr-1" />
-              {getRelativeDate(assignment.dueDate)}
-            </Badge>
+            <div className="flex items-center gap-1.5 text-sm text-slate-600">
+              <ApperIcon name="Calendar" size={16} className="text-slate-400" />
+              {getRelativeDate(assignment.due_date_c)}
+            </div>
             <Badge variant={priority.color} size="sm">
               <ApperIcon name={priority.icon} size={12} className="mr-1" />
-              {assignment.priority}
+              {assignment.priority_c}
             </Badge>
             <Badge variant={status.color} size="sm">
               <ApperIcon name={status.icon} size={12} className="mr-1" />
-              {assignment.status}
+              {assignment.status_c}
             </Badge>
           </div>
         </div>

@@ -40,11 +40,11 @@ function StudentCard({ student, onEdit, onDelete }) {
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-slate-800">{student.name}</h3>
-              <p className="text-sm text-slate-600 mt-1">{student.major}</p>
+<h3 className="text-lg font-semibold text-slate-800">{student.name_c}</h3>
+              <p className="text-sm text-slate-600 mt-1">{student.major_c}</p>
             </div>
-            <Badge className={getYearColor(student.year)}>
-              {student.year}
+            <Badge className={getYearColor(student.year_c)}>
+              {student.year_c}
             </Badge>
           </div>
 
@@ -52,12 +52,12 @@ function StudentCard({ student, onEdit, onDelete }) {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-slate-600">
               <ApperIcon name="Mail" size={16} className="text-slate-400" />
-              <span className="truncate">{student.email}</span>
+<span className="truncate">{student.email_c}</span>
             </div>
-            {student.phone && (
+            {student.phone_c && (
               <div className="flex items-center gap-2 text-sm text-slate-600">
                 <ApperIcon name="Phone" size={16} className="text-slate-400" />
-                <span>{student.phone}</span>
+                <span>{student.phone_c}</span>
               </div>
             )}
           </div>
@@ -65,12 +65,12 @@ function StudentCard({ student, onEdit, onDelete }) {
           {/* Stats */}
           <div className="flex items-center justify-between pt-4 border-t border-slate-200">
             <div className="flex items-center gap-2">
-              <ApperIcon name="GraduationCap" size={16} className="text-primary" />
-              <span className="text-sm font-medium text-slate-700">GPA: {formatGPA(student.gpa)}</span>
+<ApperIcon name="GraduationCap" size={16} className="text-primary" />
+              <span className="text-sm font-medium text-slate-700">GPA: {formatGPA(student.gpa_c)}</span>
             </div>
             <div className="flex items-center gap-2">
               <ApperIcon name="Calendar" size={16} className="text-slate-400" />
-              <span className="text-xs text-slate-500">{formatDate(student.enrollmentDate)}</span>
+              <span className="text-xs text-slate-500">{formatDate(student.enrollment_date_c)}</span>
             </div>
           </div>
 
@@ -103,7 +103,7 @@ function StudentCard({ student, onEdit, onDelete }) {
         onClose={() => setShowDeleteDialog(false)}
         onConfirm={handleDelete}
         title="Delete Student"
-        message={`Are you sure you want to delete ${student.name}? This action cannot be undone.`}
+message={`Are you sure you want to delete ${student.name_c}? This action cannot be undone.`}
         confirmText="Delete"
         variant="danger"
       />
