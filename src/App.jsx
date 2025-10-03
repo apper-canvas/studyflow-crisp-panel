@@ -2,27 +2,29 @@ import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { clearUser, setUser } from "./store/userSlice";
-import Login from "@/components/pages/Login";
-import Signup from "@/components/pages/Signup";
-import Callback from "@/components/pages/Callback";
-import ErrorPage from "@/components/pages/ErrorPage";
-import ResetPassword from "@/components/pages/ResetPassword";
-import PromptPassword from "@/components/pages/PromptPassword";
 import Courses from "@/components/pages/Courses";
+import PromptPassword from "@/components/pages/PromptPassword";
 import Grades from "@/components/pages/Grades";
+import ErrorPage from "@/components/pages/ErrorPage";
+import Callback from "@/components/pages/Callback";
 import Assignments from "@/components/pages/Assignments";
 import Calendar from "@/components/pages/Calendar";
 import Dashboard from "@/components/pages/Dashboard";
 import Students from "@/components/pages/Students";
+import ResetPassword from "@/components/pages/ResetPassword";
+import Login from "@/components/pages/Login";
+import Signup from "@/components/pages/Signup";
 import Sidebar from "@/components/organisms/Sidebar";
 import Header from "@/components/organisms/Header";
+import { clearUser, setUser } from "@/store/userSlice";
 
 export const AuthContext = createContext(null);
 function AppContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [quickAddType, setQuickAddType] = useState(null);
-  const navigate = useNavigate();
+const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const handleQuickAdd = (type) => {
     setQuickAddType(type);
@@ -31,59 +33,6 @@ function AppContent() {
     else if (type === "grade") navigate("/grades");
     else if (type === "student") navigate("/students");
   };
-
-return (
-    <>
-      <div className="min-h-screen bg-slate-50 flex">
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-        
-        <div className="flex-1 flex flex-col min-h-screen lg:ml-0">
-          <Header 
-            onMenuClick={() => setIsSidebarOpen(true)}
-            onAddClick={handleQuickAdd}
-          />
-          
-          <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
-            <div className="max-w-7xl mx-auto">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/courses" element={<Courses />} />
-                <Route path="/courses/:id" element={<Courses />} />
-                <Route path="/assignments" element={<Assignments />} />
-                <Route path="/calendar" element={<Calendar />} />
-                <Route path="/grades" element={<Grades />} />
-                <Route path="/students" element={<Students />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/callback" element={<Callback />} />
-                <Route path="/error" element={<ErrorPage />} />
-                <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
-                <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
-              </Routes>
-            </div>
-          </main>
-        </div>
-      </div>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </>
-  );
-}
-
-function App() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const { ApperClient, ApperUI } = window.ApperSDK;
@@ -180,13 +129,64 @@ function App() {
     );
   }
 
+return (
+    <>
+      <div className="min-h-screen bg-slate-50 flex">
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+        
+        <div className="flex-1 flex flex-col min-h-screen lg:ml-0">
+          <Header 
+            onMenuClick={() => setIsSidebarOpen(true)}
+            onAddClick={handleQuickAdd}
+          />
+          
+          <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-7xl mx-auto">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/courses/:id" element={<Courses />} />
+                <Route path="/assignments" element={<Assignments />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/grades" element={<Grades />} />
+                <Route path="/students" element={<Students />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/callback" element={<Callback />} />
+                <Route path="/error" element={<ErrorPage />} />
+                <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
+                <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
+              </Routes>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
+  );
+}
+
+function App() {
+  const [authMethods, setAuthMethods] = useState(null);
+
   return (
     <BrowserRouter>
       <AuthContext.Provider value={authMethods}>
         <AppContent />
       </AuthContext.Provider>
     </BrowserRouter>
-);
+  );
 }
 
 export default App;
