@@ -29,7 +29,7 @@ const Header = ({ onMenuClick, onAddClick }) => {
 
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Button
+<Button
                 variant="primary"
                 size="md"
                 onClick={() => setShowQuickAdd(!showQuickAdd)}
@@ -77,6 +77,16 @@ const Header = ({ onMenuClick, onAddClick }) => {
                     >
                       <ApperIcon name="TrendingUp" size={18} className="text-accent" />
                       <span className="text-slate-700">Add Grade</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        onAddClick("student");
+                        setShowQuickAdd(false);
+                      }}
+                      className="w-full px-4 py-2 text-left hover:bg-slate-50 flex items-center gap-3 transition-colors"
+                    >
+                      <ApperIcon name="Users" size={18} className="text-info" />
+                      <span className="text-slate-700">Add Student</span>
                     </button>
                   </motion.div>
                 </>

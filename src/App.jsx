@@ -8,17 +8,18 @@ import Courses from "@/components/pages/Courses";
 import Assignments from "@/components/pages/Assignments";
 import Calendar from "@/components/pages/Calendar";
 import Grades from "@/components/pages/Grades";
-
+import Students from "@/components/pages/Students";
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [quickAddType, setQuickAddType] = useState(null);
 
-  const handleQuickAdd = (type) => {
+const handleQuickAdd = (type) => {
     setQuickAddType(type);
     // Navigation based on type would go here
     if (type === "course") window.location.href = "/courses";
     else if (type === "assignment") window.location.href = "/assignments";
     else if (type === "grade") window.location.href = "/grades";
+    else if (type === "student") window.location.href = "/students";
   };
 
   return (
@@ -34,13 +35,14 @@ function App() {
           
           <main className="flex-1 px-4 sm:px-6 lg:px-8 py-8">
             <div className="max-w-7xl mx-auto">
-              <Routes>
+<Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/courses/:id" element={<Courses />} />
                 <Route path="/assignments" element={<Assignments />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/grades" element={<Grades />} />
+                <Route path="/students" element={<Students />} />
               </Routes>
             </div>
           </main>

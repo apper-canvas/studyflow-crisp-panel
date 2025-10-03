@@ -1,0 +1,82 @@
+[
+  {
+    "Id": 1,
+    "name": "Emma Johnson",
+    "email": "emma.johnson@university.edu",
+    "phone": "(555) 123-4567",
+    "enrollmentDate": "2022-09-01",
+    "major": "Computer Science",
+    "year": "Junior",
+    "gpa": 3.8
+  },
+  {
+    "Id": 2,
+    "name": "Michael Chen",
+    "email": "michael.chen@university.edu",
+    "phone": "(555) 234-5678",
+    "enrollmentDate": "2021-09-01",
+    "major": "Business Administration",
+    "year": "Senior",
+    "gpa": 3.6
+  },
+  {
+    "Id": 3,
+    "name": "Sarah Williams",
+    "email": "sarah.williams@university.edu",
+    "phone": "(555) 345-6789",
+    "enrollmentDate": "2023-09-01",
+    "major": "Biology",
+    "year": "Sophomore",
+    "gpa": 3.9
+  },
+  {
+    "Id": 4,
+    "name": "James Brown",
+    "email": "james.brown@university.edu",
+    "phone": "(555) 456-7890",
+    "enrollmentDate": "2023-09-01",
+    "major": "Engineering",
+    "year": "Freshman",
+    "gpa": 3.5
+  },
+  {
+    "Id": 5,
+    "name": "Olivia Martinez",
+    "email": "olivia.martinez@university.edu",
+    "phone": "(555) 567-8901",
+    "enrollmentDate": "2022-09-01",
+    "major": "Psychology",
+    "year": "Junior",
+    "gpa": 3.7
+  },
+  {
+    "Id": 6,
+    "name": "David Lee",
+    "email": "david.lee@university.edu",
+    "phone": "(555) 678-9012",
+    "enrollmentDate": "2021-09-01",
+    "major": "Economics",
+    "year": "Senior",
+    "gpa": 3.4
+  },
+  {
+    "Id": 7,
+    "name": "Sophia Taylor",
+    "email": "sophia.taylor@university.edu",
+    "phone": "(555) 789-0123",
+    "enrollmentDate": "2023-09-01",
+    "major": "Mathematics",
+    "year": "Sophomore",
+    "gpa": 4.0
+  },
+  {
+    "Id": 8,
+    "name": "Daniel Anderson",
+    "email": "daniel.anderson@university.edu",
+    "phone": "(555) 890-1234",
+    "enrollmentDate": "2022-09-01",
+    "major": "English Literature",
+    "year": "Junior",
+    "gpa": 3.3
+  }
+]
