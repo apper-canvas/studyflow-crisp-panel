@@ -1,0 +1,68 @@
+[
+  {
+    "Id": 1,
+    "courseId": 1,
+    "name": "Exams",
+    "weight": 0.3
+  },
+  {
+    "Id": 2,
+    "courseId": 1,
+    "name": "Assignments",
+    "weight": 0.4
+  },
+  {
+    "Id": 3,
+    "courseId": 1,
+    "name": "Participation",
+    "weight": 0.3
+  },
+  {
+    "Id": 4,
+    "courseId": 2,
+    "name": "Exams",
+    "weight": 0.2
+  },
+  {
+    "Id": 5,
+    "courseId": 2,
+    "name": "Assignments",
+    "weight": 0.5
+  },
+  {
+    "Id": 6,
+    "courseId": 2,
+    "name": "Participation",
+    "weight": 0.3
+  },
+  {
+    "Id": 7,
+    "courseId": 3,
+    "name": "Essays",
+    "weight": 0.4
+  },
+  {
+    "Id": 8,
+    "courseId": 3,
+    "name": "Participation",
+    "weight": 0.6
+  },
+  {
+    "Id": 9,
+    "courseId": 4,
+    "name": "Labs",
+    "weight": 0.3
+  },
+  {
+    "Id": 10,
+    "courseId": 4,
+    "name": "Exams",
+    "weight": 0.4
+  },
+  {
+    "Id": 11,
+    "courseId": 4,
+    "name": "Participation",
+    "weight": 0.3
+  }
+]
