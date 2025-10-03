@@ -212,11 +212,10 @@ return (
         error={errors.weight_c}
         min="0"
         max="100"
-        step="1"
+step="1"
         placeholder="30"
         disabled={categories.length > 0}
       />
-      </div>
 
       <div className="flex gap-3 justify-end pt-4">
         <Button type="button" variant="outline" onClick={onCancel}>
